@@ -1,7 +1,10 @@
 import React,{useState} from 'react'
 import {TasksCollection} from '../../imports/api/TasksCollection'
 
-export const TaskForm=()=>{
+export const TaskForm=({user})=>{
+    if(!user)
+        return
+    
     const [text,setText]=useState("");
     const handleSubmit=e=>{
         e.preventDefault()
@@ -10,7 +13,8 @@ export const TaskForm=()=>{
         TasksCollection.insert({
             text:text.trim(),
             createdAt:new Date(),
-            priority:1,
+            user:user._id
+
         })
         setText("")
     }

@@ -16,8 +16,22 @@ const deleteTask=({_id})=>{
     TasksCollection.remove(_id)
 }
 
-export const Tasks=()=>{
-    const tasks=useTracker(() => TasksCollection.find({},{sort:{createdAt:1}}).fetch());
+export const Tasks=({user,hideCompleted})=>{
+    const hideCompletedFilter={isChecked:{$ne:true}}
+    const userOnlyFilter=user?{user:user._id}:{}
+    const pendingOnlyFilter={...hideCompletedFilter,...userOnlyFilter}
+    const tasks = useTracker(() => {
+        if (!user) {
+          return [];
+        }
+    
+        return TasksCollection.find(
+          hideCompleted ? pendingOnlyFilter : userOnlyFilter,
+          {
+            sort: { createdAt: -1 },
+          }
+        ).fetch();
+      });
     return (
     <div className="task-container">
         <ul className="tasks">
