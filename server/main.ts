@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { TasksCollection } from '/imports/api/TasksCollection';
+import { TasksCollection } from '../imports/db/TasksCollection';
 import {Accounts} from 'meteor/accounts-base'
+import '/imports/api/TaskMethods'
 
 interface Task{
   text:string,
@@ -8,7 +9,7 @@ interface Task{
 }
 const SEED_USERNAME='metroite'
 const SEED_PASSWORD='password'
-const insertTask=(task:Task,user)=>TasksCollection.insert({text:task.text,user:user._id})
+const insertTask=(task:Task,user)=>TasksCollection.insert({text:task.text,userId:user._id})
 
 Meteor.startup(()=>{
   /**/

@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import {Tasks} from './Tasks'
 import {TaskForm} from './TaskForm'
 import { useTracker } from 'meteor/react-meteor-data';
-import { TasksCollection } from '../api/TasksCollection';
+import { TasksCollection } from '../db/TasksCollection';
 import {LoginForm} from './Login'
 
 export const App = () => {

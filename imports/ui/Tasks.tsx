@@ -1,24 +1,21 @@
 import React from 'react'
 import {Task} from './Task'
-import { TasksCollection } from '../../imports/api/TasksCollection';
+import { TasksCollection } from '../db/TasksCollection';
 import {useTracker} from 'meteor/react-meteor-data'
+import { Meteor } from 'meteor/meteor';
 
 
 const toggleChecked=({_id,isChecked})=>{
-    TasksCollection.update(_id,{
-        $set:{
-            isChecked:!isChecked
-        }
-    })
+    Meteor.call('tasks.update',_id,!isChecked)
 }
 
 const deleteTask=({_id})=>{
-    TasksCollection.remove(_id)
+    Meteor.call('tasks.remove',_id)
 }
 
 export const Tasks=({user,hideCompleted})=>{
     const hideCompletedFilter={isChecked:{$ne:true}}
-    const userOnlyFilter=user?{user:user._id}:{}
+    const userOnlyFilter=user?{userId:user._id}:{}
     const pendingOnlyFilter={...hideCompletedFilter,...userOnlyFilter}
     const tasks = useTracker(() => {
         if (!user) {
