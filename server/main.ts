@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { TasksCollection } from '../imports/db/TasksCollection';
 import {Accounts} from 'meteor/accounts-base'
 import '/imports/api/TaskMethods'
+import '/imports/api/TasksPublication'
 
 interface Task{
   text:string,

@@ -8,19 +8,6 @@ import {LoginForm} from './Login'
 export const App = () => {
   const user=useTracker(()=>Meteor.user())
   const [hideCompleted,setHideCompleted]=useState(false)
-  const hideCompletedFilter={isChecked:{$ne:true}}
-  const userOnlyFilter=user?{user:user._id}:{}
-  const pendingOnlyFilter={...hideCompletedFilter,...userOnlyFilter}
-  const pendingTasksCount = useTracker(() =>
-    {
-      if(!user){
-        return 0
-      }
-      return TasksCollection.find(hideCompletedFilter?pendingOnlyFilter:userOnlyFilter).count()
-    }
-  );
-  
-  const totalPending=pendingTasksCount?`(${pendingTasksCount})`:``
   
   return (
  
@@ -28,7 +15,7 @@ export const App = () => {
     <header>
     <div className="app-bar">
           <div className="app-header">
-            <h1>📝️ Simple Meteor To do App!{totalPending}</h1>
+            <h1>📝️ Simple Meteor To do App!</h1>
           </div>
       </div>
     </header>
